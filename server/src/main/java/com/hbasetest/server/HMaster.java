@@ -14,6 +14,7 @@ import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Master 入口类
@@ -67,7 +68,17 @@ public class HMaster {
     }
 
     public static void main(String[] args) throws Exception{
-        startZookeeper();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    startZookeeper();
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+        }.start();
+        TimeUnit.SECONDS.sleep(3);
         writeRegionInfoIfNotExists();
         new CountDownLatch(1).await();
     }
