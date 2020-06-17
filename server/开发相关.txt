@@ -1,0 +1,22 @@
+protobuf
+https://www.cnblogs.com/liugh/p/7505533.html
+
+
+其是用 java nio 自己实现了，
+那个 hadoop 协议是如何来做的？
+
+1.网络传输，直接用 protobuf 行不，
+2.用类名，
+HBaseNetProtocol
+{
+	className:"getRegion",
+	content:"asdfasdfasdf"
+}
+
+
+因此，我可以使用一个简单的定长网络读取协议即可，
+netty中是否已经有了这种简单的读取的东东，应该也是用，可是用 nio 的话，
+用进 netty, 看能否成功，
+天然支持 Google Protobuf,
+
+com.hbasetest.proto.HBaseNetProtocol

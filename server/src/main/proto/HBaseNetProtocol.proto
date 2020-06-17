@@ -1,0 +1,8 @@
+syntax = "proto3";
+option java_package = "com.hbasetest.proto";
+option java_outer_classname = "HBaseNetProtocolModel";
+
+message HBaseNetProtocol {
+    string className = 1;
+    bytes content = 2;
+}
