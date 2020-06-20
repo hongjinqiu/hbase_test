@@ -20,3 +20,38 @@ netty中是否已经有了这种简单的读取的东东，应该也是用，可
 天然支持 Google Protobuf,
 
 com.hbasetest.proto.HBaseNetProtocol
+
+有个中心节点,用多线程的方式,
+
+1.用指定 master 的方式，在启动时，添加 master 参数,
+2.slave节点，在启动时，添加 slave 参数,
+3.启动后,写入 zookeeper,
+
+
+客户端,
+1.客户端发送读请求，拼成 sql 语句,(先写死用字符串来传递数据)
+2.服务端使用 master-slave 架构来实现，
+2.1.如果只是简单的根据主键，访问某个分区中的数据，则 master,可进行解析，返回这张表所在的 slave 的位置(ip地址)和 key 范围，
+2.2.客户端取得 slave 的位置(ip地址),像相应的 slave, 发送 sql 语句, slave 去拉取数据即可。
+
+3.但是查询通常不简单,sql 语句通常会关联表,
+3.1.
+select a.*,b.* from tableA a, table b
+where a.id>1
+and a.id < 1000
+and a.b_id=b.id
+
+3.2.假设都在 master 上来执行了,master 用 nest loop 来完成这些操作,每 100 条输出一次，避免占用大量内存。
+
+服务端 master-slave 的落地实现,
+1.用指定 master 的方式，在启动时，添加 master 参数,
+    1.1.实现成直接运行 HMaster 的方式,
+    java HMaster
+2.slave节点，在启动时，添加 slave 参数,
+    java RegionServer,
+3.启动后,写入 zookeeper,
+
+
+
+
+
