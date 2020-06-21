@@ -1,9 +1,16 @@
 package com.hbasetest.util;
 
+import com.google.protobuf.ByteString;
+import com.hbasetest.proto.HBaseNetProtocolModel;
 import com.jihite.PersonModel;
 
 public class ProtobufTest {
     public static void main(String[] args) throws Exception {
+        HBaseNetProtocolModel.HBaseNetProtocol.Builder builder0 = HBaseNetProtocolModel.HBaseNetProtocol.newBuilder();
+        builder0.setContent(ByteString.copyFromUtf8("test1"));
+        HBaseNetProtocolModel.HBaseNetProtocol hBaseNetProtocol = builder0.build();
+        hBaseNetProtocol.getContent().toByteArray();
+
         PersonModel.Person.Builder builder = PersonModel.Person.newBuilder();
         builder.setId(1);
         builder.setName("jihite");

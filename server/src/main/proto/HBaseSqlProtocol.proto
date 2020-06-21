@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_package = "com.hbasetest.proto";
+option java_outer_classname = "HBaseSqlProtocolModel";
+
+message HBaseSqlParameter {
+    fixed32 type = 1;
+    bytes value = 2;
+}
+
+message HBaseSqlProtocol {
+    string sql = 1;
+    HBaseSqlParameter parameter = 2;
+}
